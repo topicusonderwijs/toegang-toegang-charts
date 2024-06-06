@@ -24,7 +24,7 @@ node() {
             }
             helm.upload {
                 stage = ''
-                path = 'toegang.org/profielhuis/frontend'
+                path = 'toegang.org/profielhuis'
             }
         }
     }
