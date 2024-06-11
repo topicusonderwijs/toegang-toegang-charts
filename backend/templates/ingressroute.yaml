@@ -1,0 +1,29 @@
+{{- if .Values.ingressRoute.enabled -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "profiel-backend.fullname" . }}-ingressroute
+  {{- with .Values.ingressRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    {{- toYaml .Values.ingressRoute.entryPoints | nindent 4 }}
+  routes:
+    - match: Host(`ws.{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: {{ include "profiel-backend.fullname" . }}-websocket-ws
+          port: {{ .Values.websocket.serviceWs.port }}
+      middlewares:
+        - name: websocket-header
+    - match: Host(`api.{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: {{ include "profiel-backend.fullname" . }}-nginx
+          port: {{ .Values.nginx.service.port }}
+  tls:
+    secretName: ph-thieme-tls
+
+{{ end }}

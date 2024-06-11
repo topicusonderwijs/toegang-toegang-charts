@@ -5,7 +5,6 @@
 replicaCount: 1
 
 image:
-  repository: "docker.topicus.education/toegang.org/profielhuis/frontend"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
 
@@ -38,6 +37,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+
 service:
   type: NodePort
   port: 3001
@@ -54,13 +54,84 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources:
-  requests:
-    cpu: 100m
-    memory: 128M
-  limits:
-    cpu: 100m
-    memory: 128M
+
+ingressRoute:
+  enabled: true
+  tld: profiel.ontwikkel.toegang.org
+  entryPoints:
+    - websecure
+    - websocket
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: traefik
+  tls:
+    sniStrict: true
+    cipherSuites:
+      - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+      - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+      - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+      - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+      - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+      - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+websocket:
+  enabled: true
+  replicaCount: 1
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  configuration:
+    host: "127.0.0.1"
+    port: 6001
+  command: ["php"]
+  args:
+    - /usr/src/app/artisan
+    - websockets:serve
+    - --host=0.0.0.0
+    - --port=6001
+  serviceWs:
+    type: ClusterIP
+    port: 6001
+
+certificate:
+  enabled: true
+  certManager:
+    issuerRef:
+      name: letsencrypt-staging
+      kind: ClusterIssuer
+  keyhubSecret:
+    enabled: false
+    type: pkcs12
+    record: uuid
+  extraTlds: []
+
+nginx:
+  enabled: true
+  image:
+    repository: nginx
+    tag: alpine3.18
+  nameOverride: ""
+  fullnameOverride: ""
+
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128M
+    limits:
+      cpu: 100m
+      memory: 128M
+
+  service:
+    type: Service
+    port: 80
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 livenessProbe:
   httpGet:
