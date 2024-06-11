@@ -6,19 +6,16 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ph-thieme-tls
+  name: ph-backend-thieme-tls
   labels: {}
 spec:
-  secretName: ph-thieme-tls
+  secretName: ph-backend-thieme-tls
   duration: 2160h0m0s # 90d
   renewBefore: 360h0m0s # 15d
   usages:
     - server auth
   dnsNames:
     - {{ .Values.ingressRoute.tld }}
-    - ws.{{ .Values.ingressRoute.tld }}
-    - api.{{ .Values.ingressRoute.tld }}
-    - app.{{ .Values.ingressRoute.tld }}
     {{ range $idx, $value := .Values.certificate.extraTlds }}
     - {{ $value | quote }}
     {{- end }}
@@ -33,7 +30,7 @@ spec:
 apiVersion: keyhub.topicus.nl/v1alpha1
 kind: KeyHubSecret
 metadata:
-  name: ph-thieme-tls
+  name: ph-backend-thieme-tls
 spec:
   template:
     type: kubernetes.io/tls

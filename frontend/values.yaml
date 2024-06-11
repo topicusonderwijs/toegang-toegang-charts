@@ -74,36 +74,12 @@ ingressRoute:
       - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
       - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 
-websocket:
-  enabled: true
-  replicaCount: 1
-
-  nameOverride: ""
-  fullnameOverride: ""
-
-  configuration:
-    host: "127.0.0.1"
-    port: 6001
-  command: ["php"]
-  args:
-    - /usr/src/app/artisan
-    - websockets:serve
-    - --host=0.0.0.0
-    - --port=6001
-  serviceWs:
-    type: ClusterIP
-    port: 6001
-
 certificate:
   enabled: true
   certManager:
     issuerRef:
       name: letsencrypt-staging
       kind: ClusterIssuer
-  keyhubSecret:
-    enabled: false
-    type: pkcs12
-    record: uuid
   extraTlds: []
 
 nginx:

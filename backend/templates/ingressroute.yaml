@@ -2,7 +2,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: "profiel-backend.name-ingressroute"
+  name: {{ include "backend.fullname" . }}-ingressroute
   {{- with .Values.ingressRoute.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -11,19 +11,12 @@ spec:
   entryPoints:
     {{- toYaml .Values.ingressRoute.entryPoints | nindent 4 }}
   routes:
-    - match: Host(`ws.{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
+    - match: Host(`{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
       kind: Rule
       services:
-        - name: "profiel-backend.name-websocket-ws"
-          port: {{ .Values.websocket.serviceWs.port }}
-      middlewares:
-        - name: websocket-header
-    - match: Host(`api.{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
-      kind: Rule
-      services:
-        - name: "profiel-backend.name-nginx"
+        - name: {{ include "backend.fullname" . }}-nginx
           port: {{ .Values.nginx.service.port }}
   tls:
-    secretName: ph-thieme-tls
+    secretName: ph-backend-thieme-tls
 
 {{ end }}
