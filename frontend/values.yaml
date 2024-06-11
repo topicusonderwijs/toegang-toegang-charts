@@ -58,9 +58,6 @@ ingress:
 ingressRoute:
   enabled: true
   tld: profiel.ontwikkel.toegang.org
-  entryPoints:
-    - websecure
-    - websocket
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     kubernetes.io/ingress.class: traefik
