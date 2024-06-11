@@ -59,7 +59,7 @@ ingressRoute:
   enabled: true
   tld: profiel.ontwikkel.toegang.org
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: traefik
   tls:
     sniStrict: true
@@ -75,7 +75,7 @@ certificate:
   enabled: true
   certManager:
     issuerRef:
-      name: letsencrypt-staging
+      name: letsencrypt-prod
       kind: ClusterIssuer
   extraTlds: []
 
