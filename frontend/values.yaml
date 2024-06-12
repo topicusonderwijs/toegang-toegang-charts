@@ -100,7 +100,7 @@ nginx:
 
   service:
     type: Service
-    port: 80
+    port: 3001
 
   nodeSelector: {}
   tolerations: []
