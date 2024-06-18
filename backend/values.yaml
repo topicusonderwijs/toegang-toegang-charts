@@ -166,3 +166,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+  - name: MY_ENV_VAR
+    value: "default value from charts project"
