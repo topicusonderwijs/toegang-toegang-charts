@@ -167,10 +167,9 @@ tolerations: []
 
 affinity: {}
 
+# To be overridden by values.yaml in the branches of toegang-toegang-infra 
 env:
-  # not secret
   configmap:
     - name: MY_ENV_VAR
-      value: "default value from charts project"
-  # secret
+      value: "default value for all environments"
   keyhubVaultRecords: []
