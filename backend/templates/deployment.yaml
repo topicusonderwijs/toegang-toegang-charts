@@ -36,17 +36,12 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # both must not be empty .Value.env.configmap and .Values.env.keyhubVaultRecords
-          {{- if or ( .Values.env.configmap ) ( .Values.env.keyhubVaultRecords ) }}
+          {{- if and ( .Values.env.configmap ) ( .Values.env.keyhubVaultRecords ) }}
           envFrom:
-          {{- end }}
-          {{- if ( .Values.env.configmap ) }}
           - configMapRef:
-            name: {{ include "backend.fullname" . }}-environments-cm
-          {{- end }}
-          {{- if ( .Values.env.keyhubVaultRecords ) }}
+              name: {{ include "backend.fullname" . }}-environments-cm
           - secretRef:
-            name: {{ include "backend.fullname" . }}-environments-secret
+              name: {{ include "backend.fullname" . }}-environments-secret
           {{- end }}
           ports:
             - name: http
