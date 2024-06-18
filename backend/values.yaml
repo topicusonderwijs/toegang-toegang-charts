@@ -168,5 +168,9 @@ tolerations: []
 affinity: {}
 
 env:
-  - name: MY_ENV_VAR
-    value: "default value from charts project"
+  # not secret
+  configmap:
+    - name: MY_ENV_VAR
+      value: "default value from charts project"
+  # secret
+  keyhubVaultRecords: []
