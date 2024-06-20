@@ -14,7 +14,7 @@ spec:
     - match: Host(`{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
       kind: Rule
       services:
-        - name: {{ include "backend.fullname" . }}-nginx
+        - name: {{ include "backend.fullname" . }}
           port: {{ .Values.nginx.service.port }}
   tls:
     secretName: ph-backend-thieme-tls
