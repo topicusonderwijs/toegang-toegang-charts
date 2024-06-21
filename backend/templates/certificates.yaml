@@ -1,6 +1,3 @@
-{{- if and .Values.certificate.enabled .Values.certificate.keyhubSecret.enabled }}
-{{ fail "Usage of certmanager and keyhubsecret are mutually exclusive" }}
-{{- end }}
 {{ if index .Values "certificate" "enabled" }}
 
 apiVersion: cert-manager.io/v1
@@ -25,16 +22,4 @@ spec:
   privateKey:
     rotationPolicy: Always
 
-{{- else if .Values.certificate.keyhubSecret.enabled }}
-# doc: https://kb.topicus.education/docs/devops/kubernetes/keyhub/#using-a-single-keyhub-vault-record
-apiVersion: keyhub.topicus.nl/v1alpha1
-kind: KeyHubSecret
-metadata:
-  name: ph-backend-thieme-tls
-spec:
-  template:
-    type: kubernetes.io/tls
-  data:
-    - name: {{ .Values.certificate.keyhubSecret.type }}
-      record: {{ .Values.certificate.keyhubSecret.record }}
 {{- end -}}
