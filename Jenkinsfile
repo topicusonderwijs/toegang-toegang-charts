@@ -1,6 +1,7 @@
 node() {
     def helmPathFrontend = 'frontend'
     def helmPathBackend = 'backend'
+    def helmPathBackendJobs = 'backend-jobs'
 
     stage('Checkout: source code') {
         git.checkout {
@@ -20,6 +21,10 @@ node() {
                 stage = 'Validating backend helm charts'
                 path = helmPathBackend
             }
+            helm.lint {
+                stage = 'Validating backend-jobs helm charts'
+                path = helmPathBackendJobs
+            }
         }
 
         stage("Build & publish") {
@@ -34,6 +39,14 @@ node() {
             helm.pkg {
                 stage = ''
                 path = helmPathBackend
+            }
+            helm.upload {
+                stage = ''
+                path = 'toegang.org/profielhuis'
+            }
+            helm.pkg {
+                stage = ''
+                path = helmPathBackendJobs
             }
             helm.upload {
                 stage = ''
