@@ -39,7 +39,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8081
+  port: 8082
 
 ingress:
   enabled: false
@@ -53,10 +53,9 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-
 ingressRoute:
   enabled: true
-  tld: profiel-api.ontwikkel.toegang.org
+  tld: profiel-jobs.ontwikkel.toegang.org
   entryPoints:
     - websecure
   annotations:
@@ -101,7 +100,7 @@ nginx:
 
   service:
     type: Service
-    port: 8081
+    port: 8082
 
   nodeSelector: {}
   tolerations: []
