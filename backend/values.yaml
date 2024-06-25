@@ -109,11 +109,11 @@ nginx:
 
 livenessProbe:
   httpGet:
-    path: /
+    path: /api/health
     port: http
 readinessProbe:
   httpGet:
-    path: /
+    path: /api/health
     port: http
 
 autoscaling:
