@@ -55,7 +55,6 @@ ingress:
 
 ingressRoute:
   enabled: true
-  tld: profiel-jobs.ontwikkel.toegang.org
   entryPoints:
     - websecure
   annotations:
