@@ -59,7 +59,7 @@ ingressRoute:
   entryPoints:
     - websecure
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-stag
     kubernetes.io/ingress.class: traefik
   tls:
     sniStrict: true
@@ -75,7 +75,7 @@ certificate:
   enabled: true
   certManager:
     issuerRef:
-      name: letsencrypt-prod
+      name: letsencrypt-stag
       kind: ClusterIssuer
   extraTlds: []
 
