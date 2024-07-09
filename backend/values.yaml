@@ -56,7 +56,6 @@ ingress:
 
 ingressRoute:
   enabled: true
-  tld: profiel-api.ontwikkel.toegang.org
   entryPoints:
     - websecure
   annotations:
