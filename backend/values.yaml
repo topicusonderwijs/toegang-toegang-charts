@@ -90,13 +90,6 @@ nginx:
   podAnnotations: {}
   podSecurityContext: {}
   securityContext: {}
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128M
-    limits:
-      cpu: 100m
-      memory: 128M
 
   service:
     type: Service
