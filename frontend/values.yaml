@@ -37,14 +37,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-resources:
-  requests:
-    cpu: 100m
-    memory: 128M
-  limits:
-    cpu: 100m
-    memory: 128M
-
 service:
   type: NodePort
   port: 3001
@@ -60,7 +52,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
 
 ingressRoute:
   enabled: true
@@ -118,7 +109,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentage: 70
+  targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.

@@ -27,7 +27,7 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
-# fsGroup: 2000
+  # fsGroup: 2000
 
 securityContext: {}
   # capabilities:
@@ -35,15 +35,7 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-# runAsUser: 1000
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 128M
-  limits:
-    cpu: 100m
-    memory: 128M
+  # runAsUser: 1000
 
 service:
   type: NodePort
