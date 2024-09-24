@@ -3,7 +3,6 @@ node() {
     def helmPathBackend = 'backend'
     def helmPathHeavyBackend = 'heavy-backend'
     def helmPathBackendJobs = 'backend-jobs'
-    def helmPathToegangMijn = 'toegang/mijn'
 
     stage('Checkout: source code') {
         git.checkout {
@@ -14,9 +13,7 @@ node() {
     }
 
     catchError {
-        // deprecated old way (it is deprecated because it uploades all charts in the same folder)
-
-        /*
+        // deprecated old way (deprecated because it places all charts in the same folder: the last value of helm.upload.path)
 
         stage("Validate") {
             helm.lint {
@@ -72,17 +69,16 @@ node() {
             }
         }
 
-        */
-
         // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
+        def helmPathToegangMijn = 'toegang/mijn'
 
         stage("Package and lint"){
-            packageHelmChart('toegang/mijn')
+            packageHelmChart(helmPathToegangMijn)
             //Add new chart here
         }
 
         stage("Publish"){
-            publishHelmCharts('toegang/mijn')
+            publishHelmCharts(helmPathToegangMijn)
             //Add new chart here
         }
     }
@@ -92,8 +88,9 @@ node() {
     }
 }
 
-void packageHelmChart(String path){
-    dir("${path}"){
+// helmPath must direct to the folder containing Chart.yaml
+void packageHelmChart(String helmPath){
+    dir("${helmPath}"){
         helm.lint {
             stage = ""
         }
@@ -104,13 +101,12 @@ void packageHelmChart(String path){
     }
 }
 
-void publishHelmCharts(String appPath){
-    dir("${appPath}"){
-        echo "appPath: ${appPath}"
+void publishHelmCharts(String helmPath){
+    dir("${helmPath}"){
         helm.upload {
             stage = ""				
             // path is the dir in helm-local on artifactory
-            path = "toegang.org/${appPath}"
+            path = "toegang.org/${helmPath}"
         }
     }
 }
