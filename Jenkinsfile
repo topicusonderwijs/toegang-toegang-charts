@@ -104,13 +104,13 @@ void packageHelmChart(String path){
     }
 }
 
-void publishHelmCharts(String path){
-    dir("${path}"){
-        echo "path: ${path}"
+void publishHelmCharts(String appPath){
+    dir("${appPath}"){
+        echo "appPath: ${appPath}"
         helm.upload {
             stage = ""				
             // path is the dir in helm-local on artifactory
-            path = "toegang.org/${path}"
+            path = "toegang.org/${appPath}"
         }
     }
 }
