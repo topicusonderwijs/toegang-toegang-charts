@@ -106,6 +106,7 @@ void packageHelmChart(String path){
 
 void publishHelmCharts(String path){
     dir("${path}"){
+        echo "path: ${path}"
         helm.upload {
             stage = ""				
             // path is the dir in helm-local on artifactory
