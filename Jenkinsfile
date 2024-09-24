@@ -3,6 +3,7 @@ node() {
     def helmPathBackend = 'backend'
     def helmPathHeavyBackend = 'heavy-backend'
     def helmPathBackendJobs = 'backend-jobs'
+    def helmPathToegangMijn = 'toegang/mijn'
 
     stage('Checkout: source code') {
         git.checkout {
@@ -14,6 +15,8 @@ node() {
 
     catchError {
         // deprecated old way (it is deprecated because it uploades all charts in the same folder)
+
+        /*
 
         stage("Validate") {
             helm.lint {
@@ -69,9 +72,9 @@ node() {
             }
         }
 
-        // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
+        */
 
-        def helmPathToegangMijn = 'toegang/mijn'
+        // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
 
         stage("Package and lint"){
             packageHelmChart(helmPathToegangMijn)
