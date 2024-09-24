@@ -77,12 +77,12 @@ node() {
         // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
 
         stage("Package and lint"){
-            packageHelmChart(helmPathToegangMijn)
+            packageHelmChart('toegang/mijn')
             //Add new chart here
         }
 
         stage("Publish"){
-            publishHelmCharts(helmPathToegangMijn)
+            publishHelmCharts('toegang/mijn')
             //Add new chart here
         }
     }
