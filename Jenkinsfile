@@ -3,7 +3,6 @@ node() {
     def helmPathBackend = 'backend'
     def helmPathHeavyBackend = 'heavy-backend'
     def helmPathBackendJobs = 'backend-jobs'
-    def helmPathToegangMijn = 'toegang/mijn'
 
     stage('Checkout: source code') {
         git.checkout {
@@ -14,6 +13,8 @@ node() {
     }
 
     catchError {
+        // deprecated old way (it is deprecated because it uploades all charts in the same folder)
+
         stage("Validate") {
             helm.lint {
                 stage = 'Validating frontend helm charts'
@@ -30,10 +31,6 @@ node() {
             helm.lint {
                 stage = 'Validating backend-jobs helm charts'
                 path = helmPathBackendJobs
-            }
-            helm.lint {
-                stage = 'Validating toegang/mijn helm charts'
-                path = helmPathToegangMijn
             }
         }
 
@@ -70,18 +67,46 @@ node() {
                 stage = ''
                 path = 'toegang.org/profielhuis'
             }
-            helm.pkg {
-                stage = ''
-                path = helmPathToegangMijn
-            }
-            helm.upload {
-                stage = ''
-                path = 'toegang.org'
-            }
+        }
+
+        // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
+
+        def helmPathToegangMijn = 'toegang/mijn'
+
+        stage("Package and lint"){
+            packageHelmChart(helmPathToegangMijn)
+            //Add new chart here
+        }
+
+        stage("Publish"){
+            publishHelmCharts(helmPathToegangMijn)
+            //Add new chart here
         }
     }
 
     notify {
         slackChannel = "#toegang-org-github"
+    }
+}
+
+void packageHelmChart(String path){
+    dir("${path}"){
+        helm.lint {
+            stage = ""
+        }
+
+        helm.pkg {
+            stage = ""
+        }
+    }
+}
+
+void publishHelmCharts(String path){
+    dir("${path}"){
+        helm.upload {
+            stage = ""				
+            // path is the dir in helm-local on artifactory
+            path = "toegang.org/${path}"
+        }
     }
 }
