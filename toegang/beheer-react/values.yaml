@@ -39,7 +39,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8095
+  port: 8094
 
 ingress:
   enabled: false
@@ -90,7 +90,7 @@ nginx:
 
   service:
     type: Service
-    port: 8095
+    port: 8094
 
   nodeSelector: {}
   tolerations: []
