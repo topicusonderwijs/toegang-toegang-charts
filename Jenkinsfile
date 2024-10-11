@@ -71,14 +71,17 @@ node() {
 
         // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
         def helmPathToegangMijn = 'toegang/mijn'
+        def helmPathToegangBeheerReact = 'toegang/beheer-react'
 
         stage("Package and lint"){
             packageHelmChart(helmPathToegangMijn)
+            packageHelmChart(helmPathToegangBeheerReact)
             //Add new chart here
         }
 
         stage("Publish"){
             publishHelmCharts(helmPathToegangMijn)
+            publishHelmCharts(helmPathToegangBeheerReact)
             //Add new chart here
         }
     }
