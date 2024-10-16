@@ -1,8 +1,4 @@
 node() {
-    def helmPathFrontend = 'frontend'
-    def helmPathBackend = 'backend'
-    def helmPathHeavyBackend = 'heavy-backend'
-    def helmPathBackendJobs = 'backend-jobs'
 
     stage('Checkout: source code') {
         git.checkout {
@@ -13,79 +9,36 @@ node() {
     }
 
     catchError {
-        // deprecated old way (deprecated because it places all charts in the same folder: the last value of helm.upload.path)
-
-        stage("Validate") {
-            helm.lint {
-                stage = 'Validating frontend helm charts'
-                path = helmPathFrontend
-            }
-            helm.lint {
-                stage = 'Validating backend helm charts'
-                path = helmPathBackend
-            }
-            helm.lint {
-                stage = 'Validating heavy-backend helm charts'
-                path = helmPathHeavyBackend
-            }
-            helm.lint {
-                stage = 'Validating backend-jobs helm charts'
-                path = helmPathBackendJobs
-            }
-        }
-
-        stage("Build & publish") {
-            helm.pkg {
-                stage = ''
-                path = helmPathFrontend
-            }
-            helm.upload {
-                stage = ''
-                path = 'toegang.org/profielhuis'
-            }
-            helm.pkg {
-                stage = ''
-                path = helmPathBackend
-            }
-            helm.upload {
-                stage = ''
-                path = 'toegang.org/profielhuis'
-            }
-            helm.pkg {
-                stage = ''
-                path = helmPathHeavyBackend
-            }
-            helm.upload {
-                stage = ''
-                path = 'toegang.org/profielhuis'
-            }
-            helm.pkg {
-                stage = ''
-                path = helmPathBackendJobs
-            }
-            helm.upload {
-                stage = ''
-                path = 'toegang.org/profielhuis'
-            }
-        }
-
-        // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
+        def helmPathProfielhuisFrontend = 'profielhuis/frontend'
+        def helmPathProfielhuisBackend = 'profielhuis/backend'
+        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend'
+        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs'
         def helmPathToegangMijn = 'toegang/mijn'
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
         def helmPathToegangCore = 'toegang/core'
 
         stage("Package and lint"){
+            // old way
+            packageHelmChart('frontend')
+            packageHelmChart('backend')
+            packageHelmChart('heavy-backend')
+            packageHelmChart('backend-jobs')
+            // new Way
             packageHelmChart(helmPathToegangMijn)
             packageHelmChart(helmPathToegangBeheerReact)
             packageHelmChart(helmPathToegangCore)
-            //Add new chart here
+            // Add new chart here
         }
 
         stage("Publish"){
+            publishHelmCharts(helmPathProfielhuisFrontend)
+            publishHelmCharts(helmPathProfielhuisBackend)
+            publishHelmCharts(helmPathProfielhuisHeavyBackend)
+            publishHelmCharts(helmPathProfielhuisBackendJobs)
             publishHelmCharts(helmPathToegangMijn)
             publishHelmCharts(helmPathToegangBeheerReact)
             publishHelmCharts(helmPathToegangCore)
-            //Add new chart here
+            // Add new chart here
         }
     }
 
