@@ -72,16 +72,19 @@ node() {
         // new way (based on https://github.com/topicusonderwijs/par-schoolkassa-charts/blob/main/Jenkinsfile)
         def helmPathToegangMijn = 'toegang/mijn'
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
+        def helmPathToegangCore = 'toegang/core'
 
         stage("Package and lint"){
             packageHelmChart(helmPathToegangMijn)
             packageHelmChart(helmPathToegangBeheerReact)
+            packageHelmChart(helmPathToegangCore)
             //Add new chart here
         }
 
         stage("Publish"){
             publishHelmCharts(helmPathToegangMijn)
             publishHelmCharts(helmPathToegangBeheerReact)
+            publishHelmCharts(helmPathToegangCore)
             //Add new chart here
         }
     }
@@ -95,7 +98,7 @@ node() {
 void packageHelmChart(String helmPath){
     dir("${helmPath}"){
         helm.lint {
-            stage = ""
+            stage = "Validating helm chart " + helmPath
         }
 
         helm.pkg {
