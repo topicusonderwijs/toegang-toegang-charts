@@ -130,3 +130,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+  configmap:
+    - name: MY_ENV_VAR
+      value: "default value for all environments"
+  keyhubVaultRecords: []
