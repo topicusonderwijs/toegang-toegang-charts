@@ -17,6 +17,6 @@ spec:
         - name: {{ include "api-v2.fullname" . }}
           port: {{ .Values.nginx.service.port }}
   tls:
-    secretName: ph-api-v2-thieme-tls
+    secretName: toegang-api-v2-tls
 
 {{ end }}
