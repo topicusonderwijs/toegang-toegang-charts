@@ -17,6 +17,7 @@ node() {
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
         def helmPathToegangCore = 'toegang/core'
         def helmPathToegangApiV2 = 'toegang/api-v2'
+        def helmPathToegangLogging = 'toegang/logging'
 
         stage("Package and lint"){
             // old way
@@ -29,6 +30,7 @@ node() {
             packageHelmChart(helmPathToegangBeheerReact)
             packageHelmChart(helmPathToegangCore)
             packageHelmChart(helmPathToegangApiV2)
+            packageHelmChart(helmPathToegangLogging)
             // Add new chart here
         }
 
@@ -41,6 +43,7 @@ node() {
             publishHelmCharts(helmPathToegangBeheerReact)
             publishHelmCharts(helmPathToegangCore)
             publishHelmCharts(helmPathToegangApiV2)
+            publishHelmCharts(helmPathToegangLogging)
             // Add new chart here
         }
     }
