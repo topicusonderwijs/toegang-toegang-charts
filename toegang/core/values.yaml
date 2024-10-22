@@ -99,11 +99,11 @@ nginx:
 livenessProbe:
   httpGet:
     path: /health/check
-    port: https
+    port: http
 readinessProbe:
   httpGet:
     path: /health/check
-    port: https
+    port: http
 
 autoscaling:
   enabled: false
