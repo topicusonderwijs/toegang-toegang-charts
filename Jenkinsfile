@@ -18,6 +18,7 @@ node() {
         def helmPathToegangCore = 'toegang/core'
         def helmPathToegangApiV2 = 'toegang/api-v2'
         def helmPathToegangLogging = 'toegang/logging'
+        def helmPathToegangReferrer = 'toegang/referrer'
 
         stage("Package and lint"){
             // old way
@@ -31,6 +32,7 @@ node() {
             packageHelmChart(helmPathToegangCore)
             packageHelmChart(helmPathToegangApiV2)
             packageHelmChart(helmPathToegangLogging)
+            packageHelmChart(helmPathToegangReferrer)
             // Add new chart here
         }
 
@@ -44,6 +46,7 @@ node() {
             publishHelmCharts(helmPathToegangCore)
             publishHelmCharts(helmPathToegangApiV2)
             publishHelmCharts(helmPathToegangLogging)
+            publishHelmCharts(helmPathToegangReferrer)
             // Add new chart here
         }
     }
