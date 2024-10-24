@@ -39,7 +39,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 9000
+  port: 8080
 
 ingress:
   enabled: false
@@ -92,7 +92,7 @@ nginx:
 
   service:
     type: Service
-    port: 9000
+    port: 8080
 
   nodeSelector: {}
   tolerations: []
@@ -101,13 +101,13 @@ nginx:
 livenessProbe:
   httpGet:
     path: /health
-    port: 9000
+    port: 8080
     scheme: HTTPS
     protocol: TCP
 readinessProbe:
   httpGet:
     path: /health
-    port: 8091
+    port: 8080
     scheme: HTTPS
     protocol: TCP
 
