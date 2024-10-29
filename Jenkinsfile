@@ -20,6 +20,7 @@ node() {
         def helmPathToegangLogging = 'toegang/logging'
         def helmPathToegangReferrer = 'toegang/referrer'
         def helmPathToegangEck = 'toegang/eck'
+        def helmPathToegangIdp = 'toegang/idp'
 
         stage("Package and lint"){
             // old way
@@ -35,6 +36,7 @@ node() {
             packageHelmChart(helmPathToegangLogging)
             packageHelmChart(helmPathToegangReferrer)
             packageHelmChart(helmPathToegangEck)
+            packageHelmChart(helmPathToegangIdp)
             // Add new chart here
         }
 
@@ -50,6 +52,7 @@ node() {
             publishHelmCharts(helmPathToegangLogging)
             publishHelmCharts(helmPathToegangReferrer)
             publishHelmCharts(helmPathToegangEck)
+            publishHelmCharts(helmPathToegangIdp)
             // Add new chart here
         }
     }
