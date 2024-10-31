@@ -99,11 +99,11 @@ nginx:
 livenessProbe:
   httpGet:
     path: /_ah/warmup
-    port: https
+    port: http
 readinessProbe:
   httpGet:
     path: /_ah/warmup
-    port: https
+    port: http
 
 autoscaling:
   enabled: false
