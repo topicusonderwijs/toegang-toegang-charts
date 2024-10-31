@@ -103,13 +103,11 @@ livenessProbe:
     path: /health
     port: 8080
     scheme: HTTPS
-    protocol: TCP
 readinessProbe:
   httpGet:
     path: /health
     port: 8080
     scheme: HTTPS
-    protocol: TCP
 
 autoscaling:
   enabled: false
