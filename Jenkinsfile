@@ -9,7 +9,7 @@ node() {
     }
 
     catchError {
-        def helmPathProfielhuisFrontend = 'profielhuis/frontend'
+        // def helmPathProfielhuisFrontend = 'profielhuis/frontend'
         def helmPathProfielhuisBackend = 'profielhuis/backend'
         def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend'
         def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs'
@@ -21,10 +21,11 @@ node() {
         def helmPathToegangReferrer = 'toegang/referrer'
         def helmPathToegangEck = 'toegang/eck'
         def helmPathToegangIdp = 'toegang/idp'
+        def helmPathToegangBeheer = 'toegang/beheer'
 
         stage("Package and lint"){
             // old way
-            packageHelmChart('frontend')
+            // packageHelmChart('frontend')
             packageHelmChart('backend')
             packageHelmChart('heavy-backend')
             packageHelmChart('backend-jobs')
@@ -37,11 +38,12 @@ node() {
             packageHelmChart(helmPathToegangReferrer)
             packageHelmChart(helmPathToegangEck)
             packageHelmChart(helmPathToegangIdp)
+            packageHelmChart(helmPathToegangBeheer)
             // Add new chart here
         }
 
         stage("Publish"){
-            publishHelmCharts(helmPathProfielhuisFrontend)
+            // publishHelmCharts(helmPathProfielhuisFrontend)
             publishHelmCharts(helmPathProfielhuisBackend)
             publishHelmCharts(helmPathProfielhuisHeavyBackend)
             publishHelmCharts(helmPathProfielhuisBackendJobs)
@@ -53,6 +55,7 @@ node() {
             publishHelmCharts(helmPathToegangReferrer)
             publishHelmCharts(helmPathToegangEck)
             publishHelmCharts(helmPathToegangIdp)
+            publishHelmCharts(helmPathToegangBeheer)
             // Add new chart here
         }
     }
