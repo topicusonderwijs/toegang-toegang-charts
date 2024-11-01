@@ -9,7 +9,6 @@ node() {
     }
 
     catchError {
-        // def helmPathProfielhuisFrontend = 'profielhuis/frontend'
         def helmPathProfielhuisBackend = 'profielhuis/backend'
         def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend'
         def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs'
@@ -25,7 +24,6 @@ node() {
 
         stage("Package and lint"){
             // old way
-            // packageHelmChart('frontend')
             packageHelmChart('backend')
             packageHelmChart('heavy-backend')
             packageHelmChart('backend-jobs')
@@ -43,7 +41,6 @@ node() {
         }
 
         stage("Publish"){
-            // publishHelmCharts(helmPathProfielhuisFrontend)
             publishHelmCharts(helmPathProfielhuisBackend)
             publishHelmCharts(helmPathProfielhuisHeavyBackend)
             publishHelmCharts(helmPathProfielhuisBackendJobs)
