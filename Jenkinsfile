@@ -9,9 +9,9 @@ node() {
     }
 
     catchError {
-        def helmPathProfielhuisBackend = 'profielhuis/backend'
-        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend'
-        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs'
+        def helmPathProfielhuisBackend = 'profielhuis/backend' // to remove if the new way works
+        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend' // to remove if the new way works
+        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs' // to remove if the new way works
         def helmPathToegangMijn = 'toegang/mijn'
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
         def helmPathToegangCore = 'toegang/core'
@@ -21,6 +21,9 @@ node() {
         def helmPathToegangEck = 'toegang/eck'
         def helmPathToegangIdp = 'toegang/idp'
         def helmPathToegangBeheer = 'toegang/beheer'
+        def helmPathProfielhuisRestApi = 'profielhuis/rest-api'
+        def helmPathProfielhuisHeavyRestApi = 'profielhuis/heavy-rest-api'
+        def helmPathProfielhuisJobs = 'profielhuis/jobs'
 
         stage("Package and lint"){
             // old way
@@ -37,6 +40,9 @@ node() {
             packageHelmChart(helmPathToegangEck)
             packageHelmChart(helmPathToegangIdp)
             packageHelmChart(helmPathToegangBeheer)
+            packageHelmChart(helmPathProfielhuisRestApi)
+            packageHelmChart(helmPathProfielhuisHeavyRestApi)
+            packageHelmChart(helmPathProfielhuisJobs)
             // Add new chart here
         }
 
@@ -53,6 +59,9 @@ node() {
             publishHelmCharts(helmPathToegangEck)
             publishHelmCharts(helmPathToegangIdp)
             publishHelmCharts(helmPathToegangBeheer)
+            publishHelmCharts(helmPathProfielhuisRestApi)
+            publishHelmCharts(helmPathProfielhuisHeavyRestApi)
+            publishHelmCharts(helmPathProfielhuisJobs)
             // Add new chart here
         }
     }
