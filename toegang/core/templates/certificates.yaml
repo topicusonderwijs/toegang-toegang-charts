@@ -3,10 +3,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: toegang-core-tls
+  name: toegang-api-tls
   labels: {}
 spec:
-  secretName: toegang-core-tls
+  secretName: toegang-api-tls
   duration: 2160h0m0s # 90d
   renewBefore: 360h0m0s # 15d
   usages:
