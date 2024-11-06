@@ -1,4 +1,4 @@
-# Default values for toegang/logging.
+# Default values for frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -39,7 +39,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8080
+  port: 8082
 
 ingress:
   enabled: false
@@ -92,7 +92,7 @@ nginx:
 
   service:
     type: Service
-    port: 8080
+    port: 8082
 
   nodeSelector: {}
   tolerations: []
@@ -101,18 +101,16 @@ nginx:
 livenessProbe:
   httpGet:
     path: /health
-    port: 8080
-    scheme: HTTPS
+    port: http
 readinessProbe:
   httpGet:
     path: /health
-    port: 8080
-    scheme: HTTPS
+    port: http
 
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 4
   targetCPUUtilizationPercentage: 70
   # targetMemoryUtilizationPercentage: 80
 

@@ -1,4 +1,4 @@
-# Default values for toegang/logging.
+# Default values for beheer.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -39,14 +39,14 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8080
+  port: 3001
 
 ingress:
   enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/tls-acme: "true"
   hosts: []
   tls: []
   #  - secretName: chart-example-tls
@@ -55,8 +55,6 @@ ingress:
 
 ingressRoute:
   enabled: true
-  entryPoints:
-    - websecure
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: traefik
@@ -92,7 +90,7 @@ nginx:
 
   service:
     type: Service
-    port: 8080
+    port: 3001
 
   nodeSelector: {}
   tolerations: []
@@ -100,20 +98,18 @@ nginx:
 
 livenessProbe:
   httpGet:
-    path: /health
-    port: 8080
-    scheme: HTTPS
+    path: /
+    port: http
 readinessProbe:
   httpGet:
-    path: /health
-    port: 8080
-    scheme: HTTPS
+    path: /
+    port: http
 
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 70
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
@@ -134,10 +130,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-# To be overridden by values.yaml in the branches of toegang-toegang-infra 
-env:
-  configmap:
-    - name: MY_ENV_VAR
-      value: "default value for all environments"
-  keyhubVaultRecords: []

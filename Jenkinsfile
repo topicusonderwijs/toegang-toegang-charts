@@ -9,10 +9,9 @@ node() {
     }
 
     catchError {
-        def helmPathProfielhuisFrontend = 'profielhuis/frontend'
-        def helmPathProfielhuisBackend = 'profielhuis/backend'
-        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend'
-        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs'
+        def helmPathProfielhuisBackend = 'profielhuis/backend' // to remove if the new way works
+        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend' // to remove if the new way works
+        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs' // to remove if the new way works
         def helmPathToegangMijn = 'toegang/mijn'
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
         def helmPathToegangCore = 'toegang/core'
@@ -21,10 +20,13 @@ node() {
         def helmPathToegangReferrer = 'toegang/referrer'
         def helmPathToegangEck = 'toegang/eck'
         def helmPathToegangIdp = 'toegang/idp'
+        def helmPathToegangBeheer = 'toegang/beheer'
+        def helmPathProfielhuisRestApi = 'profielhuis/rest-api'
+        def helmPathProfielhuisHeavyRestApi = 'profielhuis/heavy-rest-api'
+        def helmPathProfielhuisJobs = 'profielhuis/jobs'
 
         stage("Package and lint"){
             // old way
-            packageHelmChart('frontend')
             packageHelmChart('backend')
             packageHelmChart('heavy-backend')
             packageHelmChart('backend-jobs')
@@ -37,11 +39,14 @@ node() {
             packageHelmChart(helmPathToegangReferrer)
             packageHelmChart(helmPathToegangEck)
             packageHelmChart(helmPathToegangIdp)
+            packageHelmChart(helmPathToegangBeheer)
+            packageHelmChart(helmPathProfielhuisRestApi)
+            packageHelmChart(helmPathProfielhuisHeavyRestApi)
+            packageHelmChart(helmPathProfielhuisJobs)
             // Add new chart here
         }
 
         stage("Publish"){
-            publishHelmCharts(helmPathProfielhuisFrontend)
             publishHelmCharts(helmPathProfielhuisBackend)
             publishHelmCharts(helmPathProfielhuisHeavyBackend)
             publishHelmCharts(helmPathProfielhuisBackendJobs)
@@ -53,6 +58,10 @@ node() {
             publishHelmCharts(helmPathToegangReferrer)
             publishHelmCharts(helmPathToegangEck)
             publishHelmCharts(helmPathToegangIdp)
+            publishHelmCharts(helmPathToegangBeheer)
+            publishHelmCharts(helmPathProfielhuisRestApi)
+            publishHelmCharts(helmPathProfielhuisHeavyRestApi)
+            publishHelmCharts(helmPathProfielhuisJobs)
             // Add new chart here
         }
     }

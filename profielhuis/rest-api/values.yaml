@@ -1,4 +1,4 @@
-# Default values for toegang/logging.
+# Default values for frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -39,7 +39,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8080
+  port: 8081
 
 ingress:
   enabled: false
@@ -52,6 +52,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
 
 ingressRoute:
   enabled: true
@@ -92,7 +93,7 @@ nginx:
 
   service:
     type: Service
-    port: 8080
+    port: 8081
 
   nodeSelector: {}
   tolerations: []
@@ -100,14 +101,12 @@ nginx:
 
 livenessProbe:
   httpGet:
-    path: /health
-    port: 8080
-    scheme: HTTPS
+    path: /api/health
+    port: http
 readinessProbe:
   httpGet:
-    path: /health
-    port: 8080
-    scheme: HTTPS
+    path: /api/health
+    port: http
 
 autoscaling:
   enabled: false
