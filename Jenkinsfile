@@ -9,9 +9,6 @@ node() {
     }
 
     catchError {
-        def helmPathProfielhuisBackend = 'profielhuis/backend' // to remove if the new way works
-        def helmPathProfielhuisHeavyBackend = 'profielhuis/heavy-backend' // to remove if the new way works
-        def helmPathProfielhuisBackendJobs = 'profielhuis/backend-jobs' // to remove if the new way works
         def helmPathToegangMijn = 'toegang/mijn'
         def helmPathToegangBeheerReact = 'toegang/beheer-react'
         def helmPathToegangCore = 'toegang/core'
@@ -26,11 +23,6 @@ node() {
         def helmPathProfielhuisJobs = 'profielhuis/jobs'
 
         stage("Package and lint"){
-            // old way
-            packageHelmChart('backend')
-            packageHelmChart('heavy-backend')
-            packageHelmChart('backend-jobs')
-            // new Way
             packageHelmChart(helmPathToegangMijn)
             packageHelmChart(helmPathToegangBeheerReact)
             packageHelmChart(helmPathToegangCore)
@@ -47,9 +39,6 @@ node() {
         }
 
         stage("Publish"){
-            publishHelmCharts(helmPathProfielhuisBackend)
-            publishHelmCharts(helmPathProfielhuisHeavyBackend)
-            publishHelmCharts(helmPathProfielhuisBackendJobs)
             publishHelmCharts(helmPathToegangMijn)
             publishHelmCharts(helmPathToegangBeheerReact)
             publishHelmCharts(helmPathToegangCore)
