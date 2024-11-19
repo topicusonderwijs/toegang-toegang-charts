@@ -55,6 +55,8 @@ ingress:
 
 ingressRoute:
   enabled: true
+  entryPoints:
+    - websecure
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: traefik
@@ -131,6 +133,7 @@ tolerations: []
 
 affinity: {}
 
+# To be overridden by values.yaml in the branches of toegang-toegang-infra
 env:
   configmap:
     - name: MY_ENV_VAR
