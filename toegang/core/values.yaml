@@ -100,12 +100,10 @@ livenessProbe:
   httpGet:
     path: /health/check
     port: http
-    scheme: HTTPS
 readinessProbe:
   httpGet:
     path: /health/check
     port: http
-    scheme: HTTPS
 
 autoscaling:
   enabled: false
