@@ -11,7 +11,7 @@ spec:
   entryPoints:
     {{- toYaml .Values.ingressRoute.entryPoints | nindent 4 }}
   routes:
-    - match: Host(`{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`)
+    - match: Host(`{{ $.Values.ingressRoute.tld }}`) && PathPrefix(`/`) && !PathPrefix(`/v2`)
       kind: Rule
       services:
         - name: {{ include "core.fullname" . }}
